@@ -7787,7 +7787,7 @@ textarea.form-control-lg {
 
 .text-purple {
   --bs-text-opacity: 1;
-  color: $purple !important;
+  color: purple !important;
 }
 
 .text-reset {
