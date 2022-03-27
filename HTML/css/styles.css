@@ -639,6 +639,9 @@ progress {
   margin-right: auto;
   margin-left: auto;
 }
+.container-left {
+  padding-left: 0.75rem;
+}
 
 @media (min-width: 576px) {
   .container-sm, .container {
