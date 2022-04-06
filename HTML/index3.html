@@ -1,54 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>My first BootstrapVue app</title>
 
-    <title>Hello, world!</title>
+    <!-- Required Stylesheets -->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"
+    />
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
+
+    <!-- Required scripts -->
+    <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
   </head>
   <body>
-    <div id="template-bg-1">
-      <div
-      class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-      <div class="card p-4 text-light bg-dark mb-5">
-      <div class="card-header">
-      <h3>Iniciar sesión </h3>
-      </div>
-      <div class="card-body w-100">
-      <form name="login" action="" method="post">
-      <div class="input-group form-group mt-3">
-      <div class="bg-secondary rounded-start">
-      <span class="m-3"><i class="fas fa-user mt-2"></i></span>
-      </div>
-      <input type="text" class="form-control" placeholder="Usuario"
-      name="username">
-      </div>
-      <div class="input-group form-group mt-3">
-      <div class="bg-secondary rounded-start">
-      <span class="m-3"><i class="fas fa-key mt-2"></i></span>
-      </div>
-      <input type="password" class="form-control" placeholder="Contraseña"
-      name="password">
-      </div>
-      
-      <div class="form-group mt-3">
-      <input type="submit" value="Acceder"
-      class="btn bg-secondary float-end text-white w-100"
-      name="login-btn">
-      </div>
-      </form>
-      </div>
-      <div class="card-footer">
-      <div class="d-flex justify-content-center">
-      <div class="text-primary">Si es un usuario registrado, inicie sesión aquí.</div>
-      </div>
-      </div>
-      </div>
-      </div>
-      </div>
+
+    <template>
+      <b-row>
+        <b-col md="auto">
+          <b-calendar v-model="value" @context="onContext" locale="en-US"></b-calendar>
+        </b-col>
+        <b-col>
+          <p>Value: <b>'{{ value }}'</b></p>
+          <p class="mb-0">Context:</p>
+          <pre class="small">{{ context }}</pre>
+        </b-col>
+      </b-row>
+    </template>
+    
+    <script>
+      export default {
+        data() {
+          return {
+            value: '',
+            context: null
+          }
+        },
+        methods: {
+          onContext(ctx) {
+            this.context = ctx
+          }
+        }
+      }
+    </script>
   </body>
 </html>
