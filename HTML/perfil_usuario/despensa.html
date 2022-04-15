@@ -20,6 +20,32 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+
+    <script>
+        window.addEventListener("load", function () {
+            let producto = document.getElementById("producto")
+            let cantidad = document.getElementById("cantidad")
+            let listaCompra = document.getElementById("listaCompra")
+            let enviar = document.getElementById("bAdd")
+            bAdd.addEventListener("click", function (evnt) {
+
+                if (producto.value != '' && cantidad.value != '') {
+                    let cuantos = parseInt(cuantos.value)
+                    for (let i = 0; i < cuantos; i++) {
+                        let newLi = document.createElement("li")
+                        newLi.innerHTML = producto.value
+                        listaCompra.appendChild(newLi)
+                    }
+                    producto.value = ''
+                    cuantos.value = ''
+                } else {
+                    alert("Membrillo!!")
+                }
+
+            })
+        })
+    </script>
+
 </head>
 
 <body id="page-top">
@@ -46,7 +72,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Menú principal</span></a>
+                    <span>Despensa</span></a>
             </li>
 
             <!-- Divider -->
@@ -374,10 +400,80 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Menú principal</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Despensa</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
+                
+
+                <form>
+                    <div class="form-group">
+                        <label for="producto">Example label</label>
+                        <input type="text" class="form-control" id="producto" placeholder="Producto para apuntar">
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="number" class="form-control" id="cantidad" min="1"
+                            placeholder="Cantidad para apuntar">
+                    </div>
+                    <button id="enviar" type="button" class="btn btn-primary">Añadir</button>
+                </form> 
+            </div>
+            
+            <div id="listaCompra">
+            
+            </div>
+
+            <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th scope="col">Estado</th>
+                          <th scope="col">Cantidad</th>
+                          <th scope="col">Producto</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="customCheck1"></label>
+                            </div>
+                          </td>
+                          <td>Bootstrap 4 CDN and Starter Template</td>
+                          <td>Cristina</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                <label class="custom-control-label" for="customCheck2"></label>
+                            </div>
+                          </td>
+                          <td>Bootstrap Grid 4 Tutorial and Examples</td>
+                          <td>Cristina</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                <label class="custom-control-label" for="customCheck3"></label>
+                            </div>
+                          </td>
+                          <td>Bootstrap Flexbox Tutorial and Examples</td>
+                          <td>Cristina</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+
+
 </body>
 
 </html>
