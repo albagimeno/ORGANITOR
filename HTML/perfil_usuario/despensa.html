@@ -24,10 +24,6 @@
     <script src="js/jquery-3.5.0.js"></script>
 
     <script type="text/javascript">
-        // $('.all').on('click', function () {
-        //     var $inputs = $('table').find('input');
-        //     $inputs.prop('checked', 'checked');
-        // });
 
         function agregarFila() {
             document.getElementById("listaCompra").insertRow(-1).innerHTML = `
@@ -44,6 +40,7 @@
             let listaCompra = document.getElementById("listaCompra")
             let enviar = document.getElementById("enviar")
             let eliminar = document.getElementById("eliminar")
+            let todo = document.getElementById("todo")
 
             enviar.addEventListener("click", function () {
                 if (producto.value != '' && cantidad.value != '') {
@@ -54,6 +51,16 @@
             eliminar.addEventListener("click", function () {
                 $('input:checked').not('.all').parents("tr").remove();
             })
+
+            todo.addEventListener("click", function () {
+                var $inputs = $('table').find('input');
+                $inputs.prop('checked', 'checked');
+            })
+            todo.addEventListener("click", function () {
+                var $inputs = $('table').find('input');
+                $inputs.prop('checked', 'checked');
+            })
+
         })
 
     </script>
@@ -440,7 +447,7 @@
                                 <table class="table table-bordered" id="listaCompra">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Estado</th>
+                                            <th scope="col"><input type="checkbox" id="todo" class="all">&nbsp;Seleccionar todo</th>
                                             <th scope="col">Cantidad</th>
                                             <th scope="col">Producto</th>
                                         </tr>
