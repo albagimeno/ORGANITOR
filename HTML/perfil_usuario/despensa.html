@@ -19,22 +19,15 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-    <script src="https://cdn.bootcss.com/jquery/1.7.1/jquery.min.js"></script>
+    
+    <!-- jQUERY -->
+    <script src="js/jquery-3.5.0.js"></script>
 
     <script type="text/javascript">
-        $(function () {
-             // Obtener elementos
-            var $btn2 = $('#eliminar>button');
-            //Eliminar
-            $btn2.click(function () {
-                $.each($('tbody input'), function (idx, item) {
-                    if (item.checked == true) {
-                        item.parentNode.parentNode.remove();
-                    }
-                })
-            })
-        })
+        // $('.all').on('click', function () {
+        //     var $inputs = $('table').find('input');
+        //     $inputs.prop('checked', 'checked');
+        // });
 
         function agregarFila() {
             document.getElementById("listaCompra").insertRow(-1).innerHTML = `
@@ -50,11 +43,16 @@
             let cantidad = document.getElementById("cantidad")
             let listaCompra = document.getElementById("listaCompra")
             let enviar = document.getElementById("enviar")
-            
+            let eliminar = document.getElementById("eliminar")
+
             enviar.addEventListener("click", function () {
                 if (producto.value != '' && cantidad.value != '') {
                     agregarFila()
                 }
+            })
+
+            eliminar.addEventListener("click", function () {
+                $('input:checked').not('.all').parents("tr").remove();
             })
         })
 
@@ -85,7 +83,7 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-fw fa-clipboard"></i>
                     <span>Despensa</span></a>
             </li>
 
