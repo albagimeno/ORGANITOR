@@ -53,12 +53,9 @@
             })
 
             todo.addEventListener("click", function () {
-                var $inputs = $('table').find('input');
-                $inputs.prop('checked', 'checked');
-            })
-            todo.addEventListener("click", function () {
-                var $inputs = $('table').find('input');
-                $inputs.prop('checked', 'checked');
+                    var $inputs = $('table').find('input');
+                    $inputs.prop('checked', this.checked);
+                
             })
 
         })
