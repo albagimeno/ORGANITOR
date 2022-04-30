@@ -39,11 +39,12 @@ router.post('/login', async (req, res) => {
     }, process.env.TOKEN_SECRET)
 
     // Colocando el token en el header y el cuerpo de la respuesta
-        res.header('auth-token', token).json({
-            error: null,
-            data: { token },
-            message: 'Bienvenido'
-        })
+    res.header('auth-token', token).redirect('./perfil_usuario/index.html')
+    //{
+        // error: null,
+        // data: { token },
+        // message: 'Bienvenido'
+    //})
 })
 
 
@@ -70,20 +71,25 @@ router.post('/register', async (req, res) => {
 
     const user = new User({
         nombre: req.body.nombre,
-        apellidos: req.body.nombre,
-        id_usuario: req.body.nombre,
+        apellidos: req.body.apellidos,
+        id_usuario: req.body.id_usuario,
         email: req.body.email,
         password: password
     });
     try {
         const savedUser = await user.save()
-        res.json({
-            error: null,
-            data: savedUser
-        })
-    } catch (error) {
-        res.status(400).json({ error })
+            // res.json({
+            //     error: null,
+            //     data: savedUser
+            // })
+            res.redirect('./inicio_sesion.html');
+            //res.app.use(express.static(path.join(__dirname, './inicio_sesion.html')));
+        } catch (error) {
+            res.status(400).json({ error })
+        
     }
+    
+    
 })
 
 module.exports = router
