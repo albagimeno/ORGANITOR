@@ -1,125 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Inicio de sesion</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/inicio_sesion.css">
-    </head>
-        <!-- Navigation-->
-        <nav class="navbar navbar-light bg-light static-top">
-            <div class="container">
-                <a class="navbar-brand" href="index2.html">
-                    <img src="https://cdn-icons-png.flaticon.com/128/1534/1534938.png" alt="logo" width="30" height="30" class="d-inline-block align-text-top">
-                    ORGANITAR: La planificación a un nivel superior.</a>
-                <a class="btn btn-primary" href="inicio_sesion.html">Iniciar sesión</a>
-            </div>
-        </nav>
-    
-        <!-- Masthead-->
-        <div class="wrapper">
-            <header class="masthead">
-                <div id="template-bg-1">
-                    <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-                        <div class="card p-4 text-light bg-dark mb-5">
-                            <div class="card-header">
-                                <h3>Registrarse</h3>
-                            </div>
-                        <div class="card-body w-100">
-                                <form name="register" action="/register" method="post">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Inicio de sesion</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"
+        type="text/css" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+        type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/inicio_sesion.css">
+    <!-- <link rel="stylesheet" href="js/Strength.js-master/src/strength.css"> -->
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script> -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#password").on('keyup', function () {
+                var number = /([0-9])/;
+                var alphabets = /([a-zA-Z])/;
+                var special_characters = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
+                if ($('#password').val().length < 6) {
+                    $('#password-strength-status').removeClass();
+                    $('#password-strength-status').addClass('weak-password');
+                    $('#password-strength-status').html("Débil (Debe contener mínimo 6 carácteres)");
+                } else {
+                    if ($('#password').val().match(number) && $('#password').val().match(alphabets) && $('#password').val().match(special_characters)) {
+                        $('#password-strength-status').removeClass();
+                        $('#password-strength-status').addClass('strong-password');
+                        $('#password-strength-status').html("Fuerte");
+                    } else {
+                        $('#password-strength-status').removeClass();
+                        $('#password-strength-status').addClass('medium-password');
+                        $('#password-strength-status').html("Medio (Debe contener letras, numeros  y caractéres especiales.)");
+                    }
+                }
+            });
+        }); 
+    </script>
+
+</head>
+<!-- Navigation-->
+<nav class="navbar navbar-light bg-light static-top">
+    <div class="container">
+        <a class="navbar-brand" href="index2.html">
+            <img src="https://cdn-icons-png.flaticon.com/128/1534/1534938.png" alt="logo" width="30" height="30"
+                class="d-inline-block align-text-top">
+            ORGANITAR: La planificación a un nivel superior.</a>
+        <a class="btn btn-primary" href="inicio_sesion.html">Iniciar sesión</a>
+    </div>
+</nav>
+
+<!-- Masthead-->
+<div class="wrapper">
+    <header class="masthead">
+        <div id="template-bg-1">
+            <div class="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+                <div class="card p-4 text-light bg-dark mb-5">
+                    <div class="card-header">
+                        <h3>Registrarse</h3>
+                    </div>
+                    <div class="card-body w-100">
+                        <form name="register" action="/register" method="post" id="myform">
                             <div class="input-group form-group mt-3">
                                 <div class="bg-secondary rounded-start">
-                                <span class="m-3"><i class="fas fa-user mt-2"></i></span>
+                                    <span class="m-3"><i class="fas fa-user mt-2"></i></span>
                                 </div>
-                                    <input type="text" class="form-control" placeholder="Nombre"
-                                    name="nombre">
+                                <input type="text" class="form-control" placeholder="Nombre" name="nombre">
                             </div>
                             <div class="input-group form-group mt-3">
                                 <div class="bg-secondary rounded-start">
-                                <span class="m-3"><i class="fas fa-user mt-2"></i></span>
+                                    <span class="m-3"><i class="fas fa-user mt-2"></i></span>
                                 </div>
-                                    <input type="text" class="form-control" placeholder="Apellidos"
-                                    name="apellidos">
+                                <input type="text" class="form-control" placeholder="Apellidos" name="apellidos">
                             </div>
                             <div class="input-group form-group mt-3">
                                 <div class="bg-secondary rounded-start">
-                                <span class="m-3"><i class="fas fa-user mt-2"></i></span>
+                                    <span class="m-3"><i class="fas fa-user mt-2"></i></span>
                                 </div>
-                                    <input type="text" class="form-control" placeholder="Usuario"
-                                    name="id_usuario">
+                                <input type="text" class="form-control" placeholder="Usuario" name="id_usuario">
                             </div>
                             <div class="input-group form-group mt-3">
                                 <div class="bg-secondary rounded-start">
-                                <span class="m-3"><i class="fas fa-user mt-2"></i></span>
+                                    <span class="m-3"><i class="fas fa-user mt-2"></i></span>
                                 </div>
-                                    <input type="text" class="form-control" placeholder="Correo electrónico"
-                                    name="email">
+                                <input type="text" class="form-control" placeholder="Correo electrónico" name="email">
                             </div>
                             <div class="input-group form-group mt-3">
                                 <div class="bg-secondary rounded-start">
                                     <span class="m-3"><i class="fas fa-key mt-2"></i></span>
                                 </div>
-                                <input type="password" class="form-control" placeholder="Contraseña"
-                                name="password">
+                                <input type="password" class="form-control" placeholder="Contraseña" name="password"
+                                    id="password">
                             </div>
-                            
+                            <div id="password-strength-status"></div>
                             <div class="form-group mt-3">
-                                <a href="./login.html"><input type="submit" value="Acceder" class="btn bg-secondary float-end text-white w-100"></a>
+                                <a href="./login.html"><input type="submit" value="Acceder"
+                                        class="btn bg-secondary float-end text-white w-100"></a>
                             </div>
-                            </form>
-                        </div>
-                        <div class="card-footer">
-                            <div class="d-flex justify-content-center">
-                                <div class="text-primary">Si ya tiene una cuenta, pulse en <a href="inicio_sesion.html">Iniciar sesión.</a></div>
-                            </div>
-                        </div>
-                        </div>
+                        </form>
                     </div>
-                    </div>
-            </header>
-        </div>
-
-        <!-- Footer-->
-        <footer class="footer bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-                        <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href="#!">Sobre</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Contacto</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Términos de uso</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Política de privacidad</a></li>
-                        </ul>
-                        <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2021. All Rights Reserved.</p>
-                    </div>
-                    <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-facebook fs-3"></i></a>
-                            </li>
-                            <li class="list-inline-item me-4">
-                                 <a href="#!"><i class="bi-twitter fs-3"></i></a>
-                            </li>
-                            <li class="list-inline-item">
-                                 <a href="#!"><i class="bi-instagram fs-3"></i></a>
-                            </li>
-                        </ul>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-center">
+                            <div class="text-primary">Si ya tiene una cuenta, pulse en <a
+                                    href="inicio_sesion.html">Iniciar sesión.</a></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </footer>
-    </body>
+        </div>
+    </header>
+</div>
+
+<!-- Footer-->
+<footer class="footer bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
+                <ul class="list-inline mb-2">
+                    <li class="list-inline-item"><a href="#!">Sobre</a></li>
+                    <li class="list-inline-item">⋅</li>
+                    <li class="list-inline-item"><a href="#!">Contacto</a></li>
+                    <li class="list-inline-item">⋅</li>
+                    <li class="list-inline-item"><a href="#!">Términos de uso</a></li>
+                    <li class="list-inline-item">⋅</li>
+                    <li class="list-inline-item"><a href="#!">Política de privacidad</a></li>
+                </ul>
+                <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2021. All Rights Reserved.</p>
+            </div>
+            <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item me-4">
+                        <a href="#!"><i class="bi-facebook fs-3"></i></a>
+                    </li>
+                    <li class="list-inline-item me-4">
+                        <a href="#!"><i class="bi-twitter fs-3"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#!"><i class="bi-instagram fs-3"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+
 </html>
