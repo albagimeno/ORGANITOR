@@ -39,6 +39,7 @@ app.use(express.urlencoded({ extended: false }));
 // app.use('/api/user', authRoutes)
 app.use('', authRoutes)
 //app.use('/api/dashboard', verifyToken, dashboardRoutes)
+app.use('/dashboard', verifyToken, dashboardRoutes)
 app.use(express.static(path.join(__dirname, './public')));
 
 

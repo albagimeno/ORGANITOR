@@ -39,12 +39,14 @@ router.post('/login', async (req, res) => {
     }, process.env.TOKEN_SECRET)
 
     // Colocando el token en el header y el cuerpo de la respuesta
-    res.header('auth-token', token).redirect('./perfil_usuario/index.html')
-    //{
-        // error: null,
-        // data: { token },
-        // message: 'Bienvenido'
-    //})
+    // res.header('auth-token', token).json
+    // ({
+    //     error: null,
+    //     data: { token },
+    //     message: 'Bienvenido'
+    // })
+    res.header('auth-token', token).redirect(`./perfil_usuario/index.html?id=${user._id}`)
+    
 })
 
 
