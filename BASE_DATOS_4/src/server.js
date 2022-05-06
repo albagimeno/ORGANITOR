@@ -2,7 +2,7 @@
 var express = require("express");
 var exphbs = require('express-handlebars');
 const path = require('path');
-
+const morgan = require("morgan");
 
 // Inicializaciones
 const app = express();
@@ -20,14 +20,15 @@ app.set('view engine', '.hbs');
 //app.set('view options', { layout: 'index' });
 
 // Middlewares
+app.use(morgan('dev'));
+app.use(express.urlencoded({extended: false}));
 
 // Variables globales
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Rutas
-app.get('/', (req, res) => {
-    res.render('index', {layout:false});
-});
+app.use(require('./routes/index.routes'));
+app.use(require('./routes/notas.routes'));
 
 // Ficheros estáticos
 
