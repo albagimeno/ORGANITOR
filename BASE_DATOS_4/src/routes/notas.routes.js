@@ -23,7 +23,7 @@ router.get('/notas/editar/:id', editarNotaForm)
 router.put('/notas/editar/:id', actualizarNota)
 
 // Borrar notas
-router.delete('/notas/editar/:id', borrarNota)
+router.delete('/notas/eliminar/:id', borrarNota)
 
 
 

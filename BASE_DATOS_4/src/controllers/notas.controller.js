@@ -12,7 +12,8 @@ notasCtrl.crearNota = async (req, res) => {
     const { titulo, descripcion } = req.body;
     const nuevaNota = new Nota({ titulo, descripcion });
     await nuevaNota.save();
-    res.send('nota nueva')
+    req.flash('mensaje_correcto', 'Nota añadida de forma correcta');
+    res.redirect('/notas')
 }
 
 notasCtrl.mostrarTodasNotas = async (req, res) => {
@@ -20,16 +21,22 @@ notasCtrl.mostrarTodasNotas = async (req, res) => {
     res.render('notas/mostrar-notas', { notas, layout: false });
 }
 
-notasCtrl.editarNotaForm = (req, res) => {
-    res.send('formulario nota');
+notasCtrl.editarNotaForm = async (req, res) => {
+    const nota = await Nota.findById(req.params.id).lean();
+    res.render('notas/editar-nota', { nota, layout: false });
 }
 
-notasCtrl.actualizarNota = (req, res) => {
-    res.send('editar notas');
+notasCtrl.actualizarNota = async (req, res) => {
+    const { titulo, descripcion } = req.body;
+    await Nota.findByIdAndUpdate(req.params.id, { titulo, descripcion}).lean();
+    req.flash('mensaje_correcto', 'Nota editada de forma correcta');
+    res.redirect('/notas');
 }
 
-notasCtrl.borrarNota = (req, res) => {
-    res.send('borrar notas');
+notasCtrl.borrarNota = async (req, res) => {
+    await Nota.findByIdAndDelete(req.params.id);
+    req.flash('mensaje_correcto', 'Nota eliminada de forma correcta');
+    res.redirect('/notas');
 }
 
 module.exports = notasCtrl;

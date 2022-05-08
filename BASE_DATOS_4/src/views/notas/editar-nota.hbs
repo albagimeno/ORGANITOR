@@ -424,17 +424,17 @@
                     <div class=("col-md-4 mx-auto")>
                         <div class=("card text-center")>
                             <div class=("card-header")>
-                                <h3>Nota nueva</h3>
+                                <h3>Editar nota</h3>
                             </div>
                             <div class="card-body">
-                                <form action="/notas/nota-nueva" method="POST">
+                                <form action="/notas/editar/{{nota._id}}?_method=PUT" method="POST">
+                                    <input type="hidden" name="_method" value="PUT">
                                     <div class="form-group">
-                                        <input type="text" name="titulo" class="form-control" placeholder="Título"
-                                            autofocus>
+                                        <input type="text" name="titulo" class="form-control" value="{{nota.titulo}}">
                                     </div>
                                     <div class="form-group">
-                                        <textarea name="descripcion" placeholder="Descripción de la nota"
-                                            class="form-control"></textarea>
+                                        <textarea name="descripcion"
+                                            class="form-control">{{nota.descripcion}}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-primary btn-block">
