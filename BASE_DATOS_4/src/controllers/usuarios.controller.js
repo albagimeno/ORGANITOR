@@ -1,6 +1,11 @@
 const usuariosCtrl = {};
 const async = require('hbs/lib/async');
+
+const passport = require("passport");
+const { authenticate } = require('passport/lib');
+
 const Usuario = require('../models/Usuario')
+
 
 usuariosCtrl.mostrarFormRegistro = (req, res) => {
     res.render('usuarios/registro')
@@ -51,8 +56,15 @@ usuariosCtrl.mostrarFormIncSesion = (req, res) => {
     res.render('usuarios/inicio_sesion')
 }
 
-usuariosCtrl.inicioSesion = (req, res) => {
-    res.send('inicio sesion')
+usuariosCtrl.inicioSesion = passport.authenticate('local', {
+    failureRedirect: '/registro',
+    successRedirect: '/dashboard',
+    failureFlash: true
+
+});
+
+usuariosCtrl.mostrarDashboard = (req, res) => {
+    res.render('usuarios/index')
 }
 
 usuariosCtrl.salir = (req, res) => {

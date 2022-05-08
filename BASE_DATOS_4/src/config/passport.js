@@ -1,11 +1,12 @@
 const passport = require('passport');
+const { serializeUser } = require('passport/lib');
 const LocalStrategy = require('passport-local').Strategy;
 const Usuario = require('../models/Usuario')
 
 
 passport.use(new LocalStrategy({
-    usuarioCampo: 'email',
-    passwordCampo: 'password'
+    usernameField: 'email',
+    passwordField: 'password'
 }, async (email, password, done) => {
 
     //confirmar existencia de email
@@ -22,3 +23,13 @@ passport.use(new LocalStrategy({
         }
     }
 }));
+
+passport.serializeUser((usuario, done) => {
+    done(null, usuario._id);
+});
+
+passport.deserializeUser((_id, done) => {
+    Usuario.findById(_id, (err, usuario) => {
+        done(err, usuario);
+    });
+});

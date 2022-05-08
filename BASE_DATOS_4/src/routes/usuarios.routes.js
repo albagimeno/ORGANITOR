@@ -6,6 +6,7 @@ const {
     registro,
     mostrarFormIncSesion,
     inicioSesion,
+    mostrarDashboard,
     salir
 } = require('../controllers/usuarios.controller')
 
@@ -14,6 +15,7 @@ router.get('/registro', mostrarFormRegistro);
 router.post('/registro', registro);
 router.get('/inicio_sesion', mostrarFormIncSesion);
 router.post('/inicio_sesion', inicioSesion);
+router.get('/dashboard', mostrarDashboard);
 router.get('/salir', salir)
 
 
