@@ -1,16 +1,21 @@
 const listaCtrl = {};
 const async = require('hbs/lib/async');
-const Nota = require('../models/Lista');
+const Producto = require('../models/Lista');
+const Usuario = require('../models/Usuario')
 
 
-listaCtrl.mostrarLista = (req, res) => {
-    res.render('lista/mostrar-lista', { layout: false });
+listaCtrl.mostrarLista = async(req, res) => {
+
+    const lista = await Producto.find({ usuario: req.user.id }).sort({ date: 'desc' }).lean();
+    const datos_usuario = await Usuario.findById(req.user.id).lean();
+    res.render('lista/mostrar-lista', { lista, datos_usuario, layout: false });
 }
 
 listaCtrl.crearProducto = async (req, res) => {
     // console.table(req.body)
     const { nombre, cantidad, precio_unidad } = req.body;
     const nuevoProducto = new Producto({ nombre, cantidad, precio_unidad});
+    nuevoProducto.usuario = req.user.id;
     await nuevoProducto.save();
     req.flash('mensaje_correcto', 'Producto añadido de forma correcta.');
     res.redirect('/lista')

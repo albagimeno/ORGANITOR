@@ -9,9 +9,13 @@ const ProductoSchema = new Schema ({
         required: true
     },
 precio_unidad: {
-        type: Number,
+        type: String,
         required: false
     },
+    usuario: {
+        type: String,
+        required: true
+    }
 },
 {
     timestamps: true

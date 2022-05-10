@@ -62,9 +62,10 @@ usuariosCtrl.inicioSesion = passport.authenticate('local', {
     failureFlash: true
 });
 
-usuariosCtrl.mostrarDashboard = (req, res) => {
-    console.log(req.user)
-    res.render('usuarios/index')
+usuariosCtrl.mostrarDashboard = async(req, res) => {
+    console.log(req.user.id)
+    const datos_usuario = await Usuario.findById(req.user.id).lean();
+    res.render('usuarios/index', {datos_usuario, layout:false})
 }
 
 usuariosCtrl.salir = (req, res) => {
@@ -73,9 +74,6 @@ usuariosCtrl.salir = (req, res) => {
     res.redirect('/inicio_sesion');
 }
 
-usuariosCtrl.mostrarDatosUsurio = async(req, res) => {
-    const datos_usuario = await Usuario.find({id: req.user}).lean();
-}
 
 // const datos_usuario = Usuario.find({id: req.user.id}).lean()
 module.exports = usuariosCtrl;

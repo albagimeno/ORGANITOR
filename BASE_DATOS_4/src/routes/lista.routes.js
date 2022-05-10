@@ -2,26 +2,27 @@ const { Router } = require('express')
 const router = Router()
 
 const { mostrarLista,
-    crearProducto, 
-    editarProductoForm, 
-    actualizarProducto, 
+    crearProducto,
+    editarProductoForm,
+    actualizarProducto,
     borrarProducto
 } = require('../controllers/lista.controller');
+const { autenticado } = require('../helpers/autorizacion');
 
 // Mostrar lista
-router.get('/lista', mostrarLista)
+router.get('/lista', autenticado, mostrarLista)
 
 // Crear producto
-router.post('/lista', crearProducto)
+router.post('/producto-nuevo', autenticado, crearProducto)
 
 
 // Editar producto
-router.get('/lista/editar/:id', editarProductoForm)
+router.get('/lista/editar/:id', autenticado, editarProductoForm)
 
-router.put('/notas/editar/:id', actualizarProducto)
+router.put('/lista/editar/:id', autenticado, actualizarProducto)
 
 // Borrar notas
-router.delete('/lista/eliminar/:id', borrarProducto)
+router.delete('/lista/eliminar/:id', autenticado, borrarProducto)
 
 
 module.exports = router 
