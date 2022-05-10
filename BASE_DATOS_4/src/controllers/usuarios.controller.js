@@ -1,7 +1,7 @@
 const usuariosCtrl = {};
 const async = require('hbs/lib/async');
 
-const passport = require("passport");
+const passport = require('passport');
 const { authenticate } = require('passport/lib');
 
 const Usuario = require('../models/Usuario')
@@ -60,15 +60,22 @@ usuariosCtrl.inicioSesion = passport.authenticate('local', {
     failureRedirect: '/registro',
     successRedirect: '/dashboard',
     failureFlash: true
-
 });
 
 usuariosCtrl.mostrarDashboard = (req, res) => {
+    console.log(req.user)
     res.render('usuarios/index')
 }
 
 usuariosCtrl.salir = (req, res) => {
-    res.send('sesion cerrada')
+    req.logout();
+    req.flash('mensaje_correcto', 'Tu sesión ha sido cerrada.');
+    res.redirect('/inicio_sesion');
 }
 
+usuariosCtrl.mostrarDatosUsurio = async(req, res) => {
+    const datos_usuario = await Usuario.find({id: req.user}).lean();
+}
+
+// const datos_usuario = Usuario.find({id: req.user.id}).lean()
 module.exports = usuariosCtrl;

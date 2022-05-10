@@ -2,28 +2,30 @@ const { Router } = require('express')
 const router = Router()
 
 const { mostrarNotaForm,
-    crearNota, 
-    mostrarTodasNotas, 
-    editarNotaForm, 
-    actualizarNota, 
+    crearNota,
+    mostrarTodasNotas,
+    editarNotaForm,
+    actualizarNota,
     borrarNota
 } = require('../controllers/notas.controller');
 
-// Nueva nota
-router.get('/notas/add', mostrarNotaForm)
+const { autenticado } = require('../helpers/autorizacion')
 
-router.post('/notas/nota-nueva', crearNota)
+// Nueva nota
+router.get('/notas/nota-nueva', autenticado, mostrarNotaForm)
+
+router.post('/notas/nota-nueva', autenticado, crearNota)
 
 // Obtener todas las notas
-router.get('/notas', mostrarTodasNotas)
+router.get('/notas', autenticado, mostrarTodasNotas)
 
 // Editar notas
-router.get('/notas/editar/:id', editarNotaForm)
+router.get('/notas/editar/:id', autenticado, editarNotaForm)
 
-router.put('/notas/editar/:id', actualizarNota)
+router.put('/notas/editar/:id', autenticado, actualizarNota)
 
 // Borrar notas
-router.delete('/notas/eliminar/:id', borrarNota)
+router.delete('/notas/eliminar/:id', autenticado, borrarNota)
 
 
 

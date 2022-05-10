@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const methodOverride = require("method-override");
 const flash = require('connect-flash');
 const session = require('express-session');
-const passport = require("passport");
+const passport = require('passport');
 
 // Inicializaciones
 const app = express();
@@ -43,14 +43,15 @@ app.use((req, res, next) => {
     res.locals.mensaje_correcto = req.flash('mensaje_correcto');
     res.locals.mensaje_error = req.flash('mensaje_error');
     res.locals.error = req.flash('error');
+    res.locals.usuario = req.user || null;
     next();
 });
-
 
 // Rutas
 app.use(require('./routes/index.routes'));
 app.use(require('./routes/notas.routes'));
 app.use(require('./routes/usuarios.routes'));
+app.use(require('./routes/lista.routes'));
 
 // Ficheros estáticos
 app.use(express.static(path.join(__dirname, 'public')));

@@ -17,8 +17,10 @@
 
     <!-- Custom styles for this template-->
     <link href="perfil/css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="js/bootstrap.js"></script>
 
-    {{!-- <!-- obtener parámetro get url -->
+    {{!--
+    <!-- obtener parámetro get url -->
     <script>
         function getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -47,7 +49,6 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">Organitar<sup>v1</sup></div>
             </a>
-
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
@@ -85,9 +86,9 @@
             <!-- Nav Item - Pages Collapse Menu -->
 
             <li class="nav-item">
-                <a class="nav-link" href="calendario.html">
+                <a class="nav-link" href="/notas">
                     <i class="fas fa-fw fa-calendar"></i>
-                    <span>Calendario</span></a>
+                    <span>Notas</span></a>
             </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -134,8 +135,8 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
+                        <a class="collapse-item" href="/inicio_sesion">Iniciar sesion</a>
+                        <a class="collapse-item" href="/registro">Register</a>
                         <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
@@ -343,12 +344,15 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
+                        
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">          
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{usuario.id_usuario}}</span>
+                                
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
+ 
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
@@ -365,7 +369,7 @@
                                     Actividad
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="/salir" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Cerrar sesión
                                 </a>
@@ -809,36 +813,35 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">¿Desea abandonar la sesión?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Seleccione "Cerrar sesión" abajo si desea abandonar la sesión.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="/salir">Cerrar sesión</a>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="perfil/vendor/jquery/jquery.min.js"></script>
+    <script src="perfil/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="perfil/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="perfil/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="perfil/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="perfil/js/demo/chart-area-demo.js"></script>
+    <script src="perfil/js/demo/chart-pie-demo.js"></script>
 
 </body>
 
