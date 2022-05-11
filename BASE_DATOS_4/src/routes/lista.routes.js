@@ -21,7 +21,7 @@ router.get('/lista/editar/:id', autenticado, editarProductoForm)
 
 router.put('/lista/editar/:id', autenticado, actualizarProducto)
 
-// Borrar notas
+// Borrar producto
 router.delete('/lista/eliminar/:id', autenticado, borrarProducto)
 
 

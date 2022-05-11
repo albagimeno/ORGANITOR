@@ -100,12 +100,19 @@
                                 <form action="/lista/editar/{{producto._id}}?_method=PUT" method="POST">
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="form-group">
-                                        <input type="text" name="titulo" class="form-control"
+                                        <label for="producto">Producto</label>
+                                        <input type="text" class="form-control" name="nombre"
                                             value="{{producto.nombre}}">
                                     </div>
                                     <div class="form-group">
+                                        <label for="cantidad">Cantidad</label>
                                         <input type="number" class="form-control" name="cantidad" min="1"
-                                            placeholder="Precio para añadir" value="{{producto.nombre}}">
+                                            value="{{producto.cantidad}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="precio_unidad">Precio por unidad</label>
+                                        <input type="number" class="form-control" name="precio_unidad" min="1"
+                                            value="{{producto.precio_unidad}}">
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-primary btn-block">

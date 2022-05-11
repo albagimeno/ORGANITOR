@@ -23,7 +23,13 @@ listaCtrl.crearProducto = async (req, res) => {
 
 listaCtrl.editarProductoForm = async (req, res) => {
     const producto = await Producto.findById(req.params.id).lean();
-    res.render('notas/editar-producto', { producto, layout: false });
+    const datos_usuario = await Usuario.findById(req.user.id).lean();
+
+    if (producto.usuario != req.user.id) {
+        req.flash('mensaje_error', 'No autorizado.')
+        return res.redirect('/notas')
+    }
+    res.render('lista/editar-producto', { producto, datos_usuario, layout: false });
 }
 
 listaCtrl.actualizarProducto = async (req, res) => {
@@ -34,6 +40,11 @@ listaCtrl.actualizarProducto = async (req, res) => {
 }
 
 listaCtrl.borrarProducto = async (req, res) => {
+    const producto = await Producto.findById(req.params.id).lean();
+    if (producto.usuario != req.user.id) {
+        req.flash('mensaje_error', 'No autorizado.')
+        return res.redirect('/lista')
+    }
     await Producto.findByIdAndDelete(req.params.id);
     req.flash('mensaje_correcto', 'Producto eliminado de forma correcta.');
     res.redirect('/lista');
