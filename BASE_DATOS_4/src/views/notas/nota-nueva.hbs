@@ -18,6 +18,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
+    <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/perfil/css/sb-admin-2.min.css" rel="stylesheet">
     <script src="/js/bootstrap.js"></script>
 
@@ -97,17 +98,18 @@
                                 <h3>Nota nueva</h3>
                             </div>
                             <div class="card-body">
+                                {{>errores}}
                                 <form action="/notas/nota-nueva" method="POST">
                                     <div class="form-group">
                                         <input type="text" name="titulo" class="form-control" placeholder="Título"
-                                            autofocus>
+                                            value="{{titulo}}" autofocus>
                                     </div>
                                     <div class="form-group">
                                         <textarea name="descripcion" placeholder="Descripción de la nota"
-                                            class="form-control"></textarea>
+                                            class="form-control">{{descripcion}}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-primary btn-block">
+                                        <button type="submit" class="btn btn-primary btn-block">
                                             Guardar
                                         </button>
                                     </div>

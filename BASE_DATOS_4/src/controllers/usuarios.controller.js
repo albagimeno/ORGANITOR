@@ -12,13 +12,35 @@ usuariosCtrl.mostrarFormRegistro = (req, res) => {
 }
 
 usuariosCtrl.registro = async (req, res) => {
+    const numeros = /(?=.*?[0-9])/;
+    const letras_min = /(?=.*?[a-z])/;
+    const letras_mayus = /(?=.*?[A-Z])/;
+    const caracteres_esp = /(?=.*?[#?!@$%^&*-_:;/()=?¿º])/;
     const errores = [];
     const { nombre, apellidos, id_usuario, email, password, confirmar_password } = req.body
+    //contraseñas coinciden
     if (password != confirmar_password) {
         errores.push({ text: 'Las contraseñas no coinciden.' });
     }
+    //contraseña con más de 6 caractéres
     if (password.length < 6) {
-        errores.push({ text: 'La contraseña debe tener al menos 6 caracteres.' });
+        errores.push({ text: 'La contraseña debe tener al menos 6 carácteres.' });
+    }
+    //contraseña contiene números
+    if (password.search(numeros)){
+        errores.push({text: 'La contraseña debe cotener mínimo un número.'})
+    }
+    //contraseña contiene minúculas
+    if (password.search(letras_min)){
+        errores.push({text: 'La contraseña debe contener mínimo una minúscula.'})
+    }
+    //contraseña contiene mayúsculas
+    if (password.search(letras_mayus)){
+        errores.push({text: 'La contraseña debe contener mínimo una mayúscula.'})
+    }
+    //contraseña contiene caractéres especiales
+    if (password.search(caracteres_esp)){
+        errores.push({text: 'La contraseña debe contener mínimo un carácter especial.'})
     }
     if (errores.length > 0) {
         res.render('usuarios/registro', {
@@ -26,7 +48,8 @@ usuariosCtrl.registro = async (req, res) => {
             nombre,
             apellidos,
             id_usuario,
-            email
+            email,
+            password
         })
     }
     else {
@@ -39,7 +62,8 @@ usuariosCtrl.registro = async (req, res) => {
                 nombre,
                 apellidos,
                 id_usuario,
-                email
+                email,
+                password
             })
         } else {
             const nuevoUsuario = new Usuario({ nombre, apellidos, id_usuario, email, password });
