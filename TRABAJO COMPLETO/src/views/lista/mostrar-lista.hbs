@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Lista de la compra</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/principal/assets/img/castor.png" />
+
+    <!-- Custom fonts for this template-->
+    <link href="/perfil/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <!-- Custom styles for this template-->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/perfil/css/sb-admin-2.min.css" rel="stylesheet">
+    <script src="/js/bootstrap.js"></script>
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        {{!-- barra lateral --}}
+        {{>lateral_lista}}
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                {{!-- navegacion --}}
+                {{>navegacion}}
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Lista de la compra</h1>
+                    </div>
+                    {{>errores}}
+                    <form action="/producto-nuevo" method="POST">
+                        <div class="form-group">
+                            {{!-- <label for="producto">Producto</label> --}}
+                            <input type="text" class="form-control" name="nombre" placeholder="Producto"
+                                value="{{nombre}}">
+                        </div>
+                        <div class="form-group">
+                            {{!-- <label for="cantidad">Cantidad</label> --}}
+                            <input type="number" class="form-control" name="cantidad" min="1"
+                                step="any" placeholder="Cantidad para añadir" value="{{cantidad}}">
+                        </div>
+                        <div class="form-group">
+                            {{!-- <label for="precio_unidad">Precio por unidad</label> --}}
+                            <input type="number" class="form-control" name="precio_unidad" min="1"
+                                step="any" placeholder="Precio del producto" value="{{precio_unidad}}">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Añadir</button>
+                        {{!-- <button id="eliminar" type="button" class="btn btn-danger">Eliminar seleccionados</button>
+                        --}}
+                    </form>
+
+                    <br>
+                    <h3>Mis productos</h3>
+                    {{!-- {{>errores}} --}}
+                    {{>mensajes}}
+                    <div class="container">
+                        <div class="row text-center d-flex justify-content-center">
+
+                            <div class="col-8 text-center justify-content-between align-items-center">
+                                <table class="table table-bordered table-striped table-hover" id="listaCompra">
+                                    <thead>
+                                        <tr>
+                                            {{!-- <th scope="col"><input type="checkbox" id="todo"
+                                                    class="all">&nbsp;Seleccionar todo</th> --}}
+                                            <th scope="text-center col">Producto</th>
+                                            <th scope="text-center col">Cantidad</th>
+                                            <th scope="text-center col">Precio por unidad</th>
+                                            <th scope="text-center col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each lista}}
+                                        <tr>
+                                            {{!-- <td></td> --}}
+                                            <td class="text-center">{{nombre}}</td>
+                                            <td class="text-center">{{cantidad}}</td>
+                                            <td class="text-center text-success font-weight-bold">{{precio_unidad}}</td>
+                                            <td>
+                                                <a href="/lista/editar/{{_id}}">
+                                                    <button type="button" class="btn btn-success">
+                                                        <i class="bi bi-pencil-square"> Editar</i>
+                                                    </button>
+                                                </a>
+
+                                                <form action="/lista/eliminar/{{_id}}?_method=DELETE" method="POST"
+                                                    style="display: inline;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="bi bi-trash-fill"> Eliminar</i>
+                                                    </button>
+                                                </form>
+
+                                                {{!-- <form action="/lista/eliminar/{{_id}}?_method=DELETE"
+                                                    method="POST" style="display: inline;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <button type="submit" class="btn btn-danger btn-block btn-sm">
+                                                        <i class="bi bi-trash-fill"> Eliminar</i>
+                                                    </button>
+                                                </form --}} </td>
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- cerrar_sesion-->
+                {{>cerrar_sesion}}
+                {{!-- scripts --}}
+                {{>scripts}}
+</body>
+
+</html>
