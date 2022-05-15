@@ -12,10 +12,12 @@ const passport = require('passport');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 
 // Inicializaciones
+
 const app = express();
 require('./config/passport');
 
 // Ajustes
+
 app.set('port', process.env.PORT || 4000);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('hbs', exphbs.engine({
@@ -26,14 +28,14 @@ app.engine('hbs', exphbs.engine({
     hbs: allowInsecurePrototypeAccess(_handlebars)
 }));
 app.set('view engine', 'hbs');
-//app.set('view options', { layout: 'index' });
 
 // Middlewares
+
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(session({
-    secret: 'secret',
+    secret: process.env.SECRETO,
     resave: true,
     saveUninitialized: true
 }));
@@ -43,6 +45,7 @@ app.use(flash());
 
 
 // Variables globales
+
 app.use((req, res, next) => {
     res.locals.mensaje_correcto = req.flash('mensaje_correcto');
     res.locals.mensaje_error = req.flash('mensaje_error');
@@ -52,12 +55,14 @@ app.use((req, res, next) => {
 });
 
 // Rutas
+
 app.use(require('./routes/index.routes'));
 app.use(require('./routes/notas.routes'));
 app.use(require('./routes/usuarios.routes'));
 app.use(require('./routes/lista.routes'));
 
 // Ficheros estáticos
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 

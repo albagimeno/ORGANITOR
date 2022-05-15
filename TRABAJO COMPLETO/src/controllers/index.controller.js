@@ -1,6 +1,6 @@
 const indexCtrl = {};
 
-indexCtrl.renderIndex = (req, res) => {
+indexCtrl.mostrarIndex = (req, res) => {
     res.render('index', { layout: false });
 };
 

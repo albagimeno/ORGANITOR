@@ -17,7 +17,7 @@ usuariosCtrl.registro = async (req, res) => {
     const numeros = /(?=.*?[0-9])/;
     const letras_min = /(?=.*?[a-z])/;
     const letras_mayus = /(?=.*?[A-Z])/;
-    const caracteres_esp = /(?=.*?[#?!@$%^&*-_:;/()=?¿º])/;
+    const caracteres_esp = /(?=.*?[#?!@$%^&*=])/;
     const errores = [];
     const { nombre, apellidos, id_usuario, email, password, confirmar_password } = req.body
     //contraseñas coinciden
