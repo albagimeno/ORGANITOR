@@ -5,8 +5,6 @@ const Nota = require('../models/Notas');
 // Llamada al modelo de usuario
 const Usuario = require('../models/Usuario')
 
-// Llamada a la configuración del fichero /config/passport.js
-const passport = require('passport')
 
 // Muestra el fichero /views/notas/nota-nueva.hbs
 notasCtrl.mostrarNotaForm = async (req, res) => {
@@ -16,7 +14,7 @@ notasCtrl.mostrarNotaForm = async (req, res) => {
 }
 
 /* Procesa los datos recogidos en el formulario de creación de la nota, 
-Verifica que ambos cambos estan rellenos y procesa los errores.
+Verifica que ambos campos están rellenos y procesa los errores.
 Si no hay errores guarda la nota en la base de datos con el id del usuario
 que está autenticado en dicha sesión.
 Después de la creación de la nota redirige a la ruta /notas
@@ -51,8 +49,7 @@ notasCtrl.crearNota = async (req, res) => {
 
 /* Muestra el fichero /views/notas/mostrar-notas.hbs, el cual va solicitar a 
 la base de datos todas las notas que coincidan con el id del usuario que está
-autenticado en la sesión.
- */ 
+autenticado en la sesión. */
 notasCtrl.mostrarTodasNotas = async (req, res) => {
     const notas = await Nota.find({ usuario: req.user.id }).sort({
         createdAt: -1
@@ -61,9 +58,10 @@ notasCtrl.mostrarTodasNotas = async (req, res) => {
     res.render('notas/mostrar-notas', { notas, datos_usuario, layout: false });
 }
 
-/* Comprueba que el id del usuario coincide con el id del usuario de la sesion,
+/* Busca en la base de datos la nota con el id que recoge de la URL,
+Comprueba que el id del usuario de dicha nota coincide con el id del usuario de la sesión,
 si coincide muestra el fichero /views/notas/editar-nota.hbs con los datos 
-de la nota que tiene el id que se pasado como parametro en la URL*/ 
+de esa nota en concreto */
 notasCtrl.editarNotaForm = async (req, res) => {
     const nota = await Nota.findById(req.params.id).lean();
     const datos_usuario = await Usuario.findById(req.user.id).lean();
@@ -85,6 +83,11 @@ notasCtrl.actualizarNota = async (req, res) => {
     req.flash('mensaje_correcto', 'Nota editada de forma correcta');
     res.redirect('/notas');
 }
+
+/* Busca en la base de datos la nota con el id que recoge de la URL,
+si el id del usuario de esa nota coincide con el id del usuario que ha iniciado 
+la sesión la nota se borra de la base de datos.
+Una vez borrada redirige a la ruta /notas */
 
 notasCtrl.borrarNota = async (req, res) => {
     const nota = await Nota.findById(req.params.id).lean();
