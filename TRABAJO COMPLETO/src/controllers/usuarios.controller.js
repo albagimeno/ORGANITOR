@@ -1,18 +1,27 @@
 const usuariosCtrl = {};
 const async = require('hbs/lib/async');
 
+// Llamada a la configuración del fichero /config/passport.js
 const passport = require('passport');
 const { authenticate } = require('passport/lib');
 
+// Llamada al modelo de usuario
 const Usuario = require('../models/Usuario');
+// Llamada al modelo de producto
 const Producto = require('../models/Lista');
+// Llamada al modelo de nota
 const Nota = require('../models/Notas');
 
-
+// Muestra el fichero /views/usuarios/registro.hbs
 usuariosCtrl.mostrarFormRegistro = (req, res) => {
     res.render('usuarios/registro')
 }
 
+/* Procesa los datos recogidos en el registro, verifica la seguridad de la contraseña
+Comprueba que el email y el ID de usuario no esté en uso.
+Si el correo y ID no existe, crea el usuario y lo guarda en la base de datos 
+a la vez que encripta la contraseña.
+ */
 usuariosCtrl.registro = async (req, res) => {
     const numeros = /(?=.*?[0-9])/;
     const letras_min = /(?=.*?[a-z])/;
@@ -56,8 +65,21 @@ usuariosCtrl.registro = async (req, res) => {
     }
     else {
         const emailUsuario = await Usuario.findOne({ email: email });
+        const id_usuarioUsuario = await Usuario.findOne({ id_usuario: id_usuario });
         if (emailUsuario) {
             req.flash('mensaje_error', 'El email indicado ya está en uso.');
+            // res.redirect('/registro')
+            res.render('usuarios/registro', {
+                errores,
+                nombre,
+                apellidos,
+                id_usuario,
+                email,
+                password
+            })
+        }
+        if (id_usuarioUsuario) {
+            req.flash('mensaje_error', 'El ID de usuario indicado ya está en uso.');
             // res.redirect('/registro')
             res.render('usuarios/registro', {
                 errores,
@@ -78,23 +100,30 @@ usuariosCtrl.registro = async (req, res) => {
 
 }
 
+// Muestra el fichero /views/usuarios/inicio_sesion.hbs
 usuariosCtrl.mostrarFormIncSesion = (req, res) => {
     res.render('usuarios/inicio_sesion')
 }
 
+/* Hace uso del módulo passport.
+Lleva  acabo la comprobación configurada en /config/passport.js,
+si los datos coinciden con la base de datos,
+redirige a la ruta /dashboard, si falla redirige la ruta /registro */ 
 usuariosCtrl.inicioSesion = passport.authenticate('local', {
     failureRedirect: '/registro',
     successRedirect: '/dashboard',
     failureFlash: true
 });
 
+/* Muestra el fichero /views/usuarios/index.hbs el cuál va mostrar el presupuesto de la 
+lista de compra y la cantidad de notas de ese usuario */
 usuariosCtrl.mostrarDashboard = async (req, res) => {
     const datos_usuario = await Usuario.findById(req.user.id).lean();
     const lista = await Producto.find({ usuario: req.user.id }).sort({ date: 'desc' }).lean();
-    const notas = await Nota.find({ usuario: req.user.id }).sort({createdAt: -1}).lean();
+    const notas = await Nota.find({ usuario: req.user.id }).sort({ createdAt: -1 }).lean();
     var suma = 0;
     for (var i in lista) {
-        suma += parseFloat(lista[i].precio_unidad)*(lista[i].cantidad)
+        suma += parseFloat(lista[i].precio_unidad) * (lista[i].cantidad)
     }
     var cant_notas = 0;
     for (var j in notas) {
@@ -103,12 +132,11 @@ usuariosCtrl.mostrarDashboard = async (req, res) => {
     res.render('usuarios/index', { datos_usuario, suma, cant_notas, layout: false })
 }
 
+// Permite al usuario cerrar la sesión y redirije a /inicio_sesion
 usuariosCtrl.salir = (req, res) => {
     req.logout();
     req.flash('mensaje_correcto', 'Tu sesión ha sido cerrada.');
     res.redirect('/inicio_sesion');
 }
 
-
-// const datos_usuario = Usuario.find({id: req.user.id}).lean()
 module.exports = usuariosCtrl;
