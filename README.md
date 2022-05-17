@@ -13,9 +13,9 @@ Para el almacenamiento de datos utilizaremos _MongoDB_ dentro de la pila de _doc
 ## Organigrama
 - [Docker](docker)
 - [Aplicación Web](web)
-    - [Modulos pre-descargados](web\node_modules)
-    - [Requerimientos de Node](web\package.json)
-    - [Archivo dotenv con variables](web\.env)
+    - [Modulos pre-descargados](web/node_modules)
+    - [Requerimientos de Node](web/package.json)
+    - [Archivo dotenv con variables](web/.env)
     - [Archivos de web](src)
-        - [Inicio de la aplicación](web\src\index.js)
+        - [Inicio de la aplicación](web/src/index.js)
         
