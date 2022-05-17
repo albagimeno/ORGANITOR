@@ -1,5 +1,5 @@
 # ¿Qué es Organitor?
-Organitar es el proyecto de fin de Curso de [Alba Gimeno](https://github.com/albagimeno) e [Ismael Castellanos](https://github.com/ismaelct). Se trata de un proyecto de Aplicacion Web desplegada a traves de Docker y con el entorno de ejecución Node.js. 
+Organitor es el proyecto de fin de Curso de [Alba Gimeno](https://github.com/albagimeno) e [Ismael Castellanos](https://github.com/ismaelct). Se trata de un proyecto de Aplicacion Web desplegada a traves de Docker y con el entorno de ejecución Node.js. 
 
 # ¿Cuál es la finalidad del proyecto?
 La base del proyecto es crear tanto las herramientas para un facil despliegue y la base de la aplicación web.
