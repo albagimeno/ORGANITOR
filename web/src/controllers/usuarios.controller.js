@@ -64,32 +64,33 @@ usuariosCtrl.registro = async (req, res) => {
         })
     }
     else {
-        const emailUsuario = await Usuario.findOne({ email: email });
+        const emailUsuario = await Usuario.find({ "email": email });
         const id_usuarioUsuario = await Usuario.findOne({ id_usuario: id_usuario });
         if (emailUsuario) {
-            req.flash('mensaje_error', 'El email indicado ya está en uso.');
-            // res.redirect('/registro')
+            errores.push({text: 'El email indicado ya está en uso.'});
             res.render('usuarios/registro', {
                 errores,
                 nombre,
                 apellidos,
                 id_usuario,
                 email,
-                password
+                password,
+                confirmar_password
             })
         }
         if (id_usuarioUsuario) {
-            req.flash('mensaje_error', 'El ID de usuario indicado ya está en uso.');
-            // res.redirect('/registro')
+            errores.push({text: 'El usuario indicado ya está en uso.'});
             res.render('usuarios/registro', {
                 errores,
                 nombre,
                 apellidos,
                 id_usuario,
                 email,
-                password
+                password,
+                confirmar_password
             })
-        } else {
+        } 
+        else {
             const nuevoUsuario = new Usuario({ nombre, apellidos, id_usuario, email, password });
             nuevoUsuario.password = await nuevoUsuario.encriptarPassword(password);
             await nuevoUsuario.save();
@@ -110,7 +111,7 @@ Lleva  acabo la comprobación configurada en /config/passport.js,
 si los datos coinciden con la base de datos,
 redirige a la ruta /dashboard, si falla redirige la ruta /registro */ 
 usuariosCtrl.inicioSesion = passport.authenticate('local', {
-    failureRedirect: '/registro',
+    failureRedirect: '/inicio_sesion',
     successRedirect: '/dashboard',
     failureFlash: true
 });
