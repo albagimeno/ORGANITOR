@@ -3,7 +3,9 @@ const { serializeUser } = require('passport/lib');
 const LocalStrategy = require('passport-local').Strategy;
 const Usuario = require('../models/Usuario')
 
-
+/* Passport nos va a permitir asignar un campo de verificación para el email y otro 
+para la contraseña que recoja en el formulario de inicio de sesión. Una vez recogidos esos 
+campos los busca en la base de datos, si no coinciden devolverá un error */
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
@@ -24,10 +26,12 @@ passport.use(new LocalStrategy({
     }
 }));
 
+// Si damos el usuario obtenemos el id
 passport.serializeUser((usuario, done) => {
     done(null, usuario._id);
 });
 
+// Si damos el id del usuario obtenemos todos los datos del mismo
 passport.deserializeUser((_id, done) => {
     Usuario.findById(_id, (err, usuario) => {
         done(err, usuario);
