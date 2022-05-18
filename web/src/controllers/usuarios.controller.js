@@ -124,7 +124,12 @@ usuariosCtrl.mostrarDashboard = async (req, res) => {
     const notas = await Nota.find({ usuario: req.user.id }).sort({ createdAt: -1 }).lean();
     var suma = 0;
     for (var i in lista) {
-        suma += parseFloat(lista[i].precio_unidad) * (lista[i].cantidad)
+        if((lista[i].precio_unidad) === null){
+            suma +=0;
+        }else{
+            suma += parseFloat(lista[i].precio_unidad) * (lista[i].cantidad)
+        }
+        
     }
     var cant_notas = 0;
     for (var j in notas) {
