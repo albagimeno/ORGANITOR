@@ -29,7 +29,13 @@ usuariosCtrl.registro = async (req, res) => {
     const caracteres_esp = /(?=.*?[#?!@$%^&*=])/;
     const errores = [];
     const { nombre, apellidos, id_usuario, email, password, confirmar_password } = req.body
-    //contraseñas coinciden
+    //comprobación de que todos los campos hayan sido rellenados
+    if(nombre.length == 0 || apellidos.length == 0 || email.length == 0 || id_usuario.length == 0 ||
+        password.length == 0 || confirmar_password.length == 0){
+            errores.push({ text: 'Todos los campos deben estar rellenados.' })
+        }
+    if (password.length != 0 || confirmar_password.length != 0){
+        //contraseñas coinciden
     if (password != confirmar_password) {
         errores.push({ text: 'Las contraseñas no coinciden.' });
     }
@@ -53,6 +59,8 @@ usuariosCtrl.registro = async (req, res) => {
     if (password.search(caracteres_esp)) {
         errores.push({ text: 'La contraseña debe contener mínimo un carácter especial.' })
     }
+    }
+    
     if (errores.length > 0) {
         res.render('usuarios/registro', {
             errores,
