@@ -16,6 +16,6 @@ Para el almacenamiento de datos utilizaremos _MongoDB_ dentro de la pila de _doc
     - [Modulos pre-descargados](web/node_modules)
     - [Requerimientos de Node](web/package.json)
     - [Archivo dotenv con variables](web/.env)
-    - [Archivos de web](src)
+    - [Archivos de web](web/src)
         - [Inicio de la aplicación](web/src/index.js)
         
