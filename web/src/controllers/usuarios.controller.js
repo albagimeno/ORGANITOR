@@ -60,7 +60,6 @@ usuariosCtrl.registro = async (req, res) => {
         errores.push({ text: 'La contraseña debe contener mínimo un carácter especial.' })
     }
     }
-    
     if (errores.length > 0) {
         res.render('usuarios/registro', {
             errores,
@@ -72,8 +71,8 @@ usuariosCtrl.registro = async (req, res) => {
         })
     }
     else {
-        const emailUsuario = await Usuario.find({ "email": email });
-        const id_usuarioUsuario = await Usuario.findOne({ id_usuario: id_usuario });
+        const emailUsuario = await Usuario.findOne({ "email": email});
+        const id_usuarioUsuario = await Usuario.findOne({ "id_usuario": id_usuario });
         if (emailUsuario) {
             errores.push({text: 'El email indicado ya está en uso.'});
             res.render('usuarios/registro', {
