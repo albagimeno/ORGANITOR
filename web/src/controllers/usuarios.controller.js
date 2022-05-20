@@ -104,7 +104,7 @@ usuariosCtrl.registro = async (req, res) => {
             await nuevoUsuario.save();
 
             const tokenVerificacion = nuevoUsuario.generarTokenVerificacion();
-            const ruta = `https://www.organitor.com/verificar/${tokenVerificacion}`
+            const ruta = `https://organitor.es/verificar/${tokenVerificacion}`
 
             await transporter.sendMail({
                 from: '"Bienvenida de Organitor" <noreply@organitor.com>',
@@ -135,10 +135,6 @@ usuariosCtrl.inicioSesion = passport.authenticate('local', {
     failureFlash: true,
 });
 
-usuariosCtrl.inicioSesionVerifInicio = async (req, res) => {
-
-};
-
 /* Muestra el fichero /views/usuarios/index.hbs el cuál va mostrar el presupuesto de la 
 lista de compra y la cantidad de notas de ese usuario */
 usuariosCtrl.mostrarDashboard = async (req, res) => {
@@ -168,7 +164,7 @@ usuariosCtrl.salir = (req, res) => {
     res.redirect('/inicio_sesion');
 }
 
-// Permite al usuario cerrar la sesión y redirije a /inicio_sesion
+// Verifica la cuenta del usuario tras recibir el email
 usuariosCtrl.verificarCuenta = async (req, res) => {
     const { token } = req.params
 
@@ -196,8 +192,8 @@ usuariosCtrl.verificarCuenta = async (req, res) => {
 
 // Configuración del correo
 var transporter = nodemailer.createTransport({
-    host: 'organitor.es',
-    port: 465,
+    host: 'smtp.servidor-correo.net',
+    port: 587,
     secure: true, // true for 465, false for other ports
     auth: {
         user: process.env.USUARIO_EMAIL, // your domain email address
