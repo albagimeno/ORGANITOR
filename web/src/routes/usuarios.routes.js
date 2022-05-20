@@ -8,7 +8,8 @@ const {
     mostrarFormIncSesion,
     inicioSesion,
     mostrarDashboard,
-    salir
+    salir,
+    verificarCuenta
 } = require('../controllers/usuarios.controller')
 
 /*LLamada al fichero que contiene la función que permite saber si un usuario
@@ -31,5 +32,6 @@ estar autenticado */
 router.get('/dashboard', autenticado, mostrarDashboard);
 // Permite cerrar la sesión, el usuario tiene que estar autenticado
 router.get('/salir', autenticado, salir)
-
+// Muestra la pagina de verificación
+router.get('/verificar/:id', autenticado, verificarCuenta)
 module.exports = router;
