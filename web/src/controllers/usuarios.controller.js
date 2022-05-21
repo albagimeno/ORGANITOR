@@ -1,6 +1,7 @@
 const usuariosCtrl = {};
 const async = require('hbs/lib/async');
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 
 // Llamada a la configuración del fichero /config/passport.js
 const passport = require('passport');
@@ -12,6 +13,7 @@ const Usuario = require('../models/Usuario');
 const Producto = require('../models/Lista');
 // Llamada al modelo de nota
 const Nota = require('../models/Notas');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 // Muestra el fichero /views/usuarios/registro.hbs
 usuariosCtrl.mostrarFormRegistro = (req, res) => {
@@ -99,22 +101,28 @@ usuariosCtrl.registro = async (req, res) => {
             })
         }
         else {
+            const correctos = []
             const nuevoUsuario = new Usuario({ nombre, apellidos, id_usuario, email, password });
             nuevoUsuario.password = await nuevoUsuario.encriptarPassword(password);
             await nuevoUsuario.save();
 
-            const tokenVerificacion = nuevoUsuario.generarTokenVerificacion();
+            const tokenVerificacion = nuevoUsuario.generarTokenVerificacion(nuevoUsuario);
             const ruta = `https://organitor.es/verificar/${tokenVerificacion}`
-
-            await transporter.sendMail({
-                from: '"Bienvenida de Organitor" <noreply@organitor.com>',
+            transporter.sendMail({
+                from: '"Bienvenida a Organitor" <noreply@organitor.com>',
                 to: email,
                 subject: 'Verificación de cuenta',
-                html: `Pulse en <a href = '${ruta}'>aquí</a> para confirmar su email`
+                html: `
+                <p>Queremos darle la bienvenida al proyecto de Alba e Ismael, esperamos que lo disfrute</p>
+                <p>Pulse en <a href = '${ruta}'>aquí</a> para confirmar su cuenta.</p>
+                <br>
+                <p>Saludos</p>
+                <p>Soporte de Organitor</p>`
             });
-            req.flash('mensaje_correcto', `Correo enviado a ${email}`);
-            req.flash('mensaje_correcto', 'Usuario creado de forma correcta, verifique su cuenta antes iniciar sesión');
-            res.redirect('/inicio_sesion')
+            correctos.push({ text: `Correo enviado a ${email}`});
+            correctos.push({ text: 'Usuario creado de forma correcta, revise su correo electrónico para verificar su cuenta.'});
+            res.render('usuarios/inicio_sesion', {correctos})
+
         }
     }
 
@@ -132,6 +140,7 @@ redirige a la ruta /dashboard, si falla redirige la ruta /registro */
 usuariosCtrl.inicioSesion = passport.authenticate('local', {
     failureRedirect: '/inicio_sesion',
     successRedirect: '/dashboard',
+    badRequestMessage: 'Debe rellenar todos los campos',
     failureFlash: true,
 });
 
@@ -164,21 +173,39 @@ usuariosCtrl.salir = (req, res) => {
     res.redirect('/inicio_sesion');
 }
 
-// Verifica la cuenta del usuario tras recibir el email
-usuariosCtrl.verificarCuenta = async (req, res) => {
-    const { token } = req.params
 
-    if (!token) {
+// Configuración del correo, creación de la comunicación con el servidor de correo
+const transporter = nodemailer.createTransport({
+    host: "smtp.servidor-correo.net",
+    port: "587",
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: process.env.USUARIO_EMAIL, // your domain email address
+        pass: process.env.PASSWORD_EMAIL // your password
+    }
+});
+
+transporter.verify(function (error, success) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log("Servidor de correos preparado");
+    }
+});
+
+// Verifica la cuenta del usuario tras que éste acceda al enlace de su correo.
+usuariosCtrl.verificarCuenta = async (req, res) => {
+    if (!req.params.id) {
         req.flash('mensaje_error', 'Verificación no encontrada');
         res.redirect('/inicio_sesion');
-    }
-    else {
-        let verificacion = null
-        verificacion = jwt.verify(
-            token,
-            process.env.TOKEN_VERIFICACION_USUARIO)
-    }
-    const usuario = await Usuario.findOne({ _id: verificacion.ID }).exec();
+    } else {
+
+        const verificacion = jwt.verify(
+            req.params.id,
+            process.env.TOKEN_VERIFICACION_USUARIO
+        );
+
+    const usuario = await Usuario.findOne({ "_id": verificacion.ID });
     if (!usuario) {
         req.flash('mensaje_error', 'Usuario no encontrado.');
         res.redirect('/inicio_sesion');
@@ -189,18 +216,14 @@ usuariosCtrl.verificarCuenta = async (req, res) => {
         res.redirect('/inicio_sesion');
     }
 }
+}
 
-// Configuración del correo
-var transporter = nodemailer.createTransport({
-    host: 'smtp.servidor-correo.net',
-    port: 587,
-    secure: true, // true for 465, false for other ports
-    auth: {
-        user: process.env.USUARIO_EMAIL, // your domain email address
-        pass: process.env.PASSWORD_EMAIL // your password
-    }
-});
-
+usuariosCtrl.detectarError404 = (req, res) => {
+    res.status(404).redirect('/404');
+}
+usuariosCtrl.mostrarError404 = (req, res) => {
+        res.render('partials/error404')
+}
 
 
 

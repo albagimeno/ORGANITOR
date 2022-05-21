@@ -9,7 +9,9 @@ const {
     inicioSesion,
     mostrarDashboard,
     salir,
-    verificarCuenta
+    verificarCuenta,
+    detectarError404,
+    mostrarError404,
 } = require('../controllers/usuarios.controller')
 
 /*LLamada al fichero que contiene la función que permite saber si un usuario
@@ -33,5 +35,10 @@ router.get('/dashboard', autenticado, mostrarDashboard);
 // Permite cerrar la sesión, el usuario tiene que estar autenticado
 router.get('/salir', autenticado, salir)
 // Muestra la pagina de verificación
-router.get('/verificar/:id', autenticado, verificarCuenta)
+router.get('/verificar/:id', verificarCuenta)
+
+router.get('/404', mostrarError404)
+router.get('/*', detectarError404)
+
+
 module.exports = router;

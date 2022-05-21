@@ -54,6 +54,10 @@ app.use((req, res, next) => {
     next();
 });
 
+// Ficheros estáticos
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Rutas
 
 app.use(require('./routes/index.routes'));
@@ -61,9 +65,9 @@ app.use(require('./routes/notas.routes'));
 app.use(require('./routes/usuarios.routes'));
 app.use(require('./routes/lista.routes'));
 
-// Ficheros estáticos
+    // res.status(404).send('what???');
 
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 module.exports = app;

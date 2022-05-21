@@ -25,10 +25,10 @@ notasCtrl.crearNota = async (req, res) => {
     const errores = [];
     const { titulo, descripcion } = req.body;
     if (titulo.length == 0) {
-        errores.push({ text: 'El campo de "Título" tiene que estar relleno"' });
+        errores.push({ text: 'El campo de "Título" tiene que estar relleno' });
     }
     if (descripcion.length == 0) {
-        errores.push({ text: 'El campo de "Descripción" tiene que estar relleno"' });
+        errores.push({ text: 'El campo de "Descripción" tiene que estar relleno' });
     }
     if (errores.length > 0) {
         res.render('notas/nota-nueva', {

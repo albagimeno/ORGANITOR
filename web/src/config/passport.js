@@ -11,16 +11,13 @@ passport.use(new LocalStrategy({
     passwordField: 'password'
 }, async (email, password, done) => {
 
-    if (email.length == 0 || password.length == 0) {
-        return done(null, false, { message: 'Debe rellenar todos los campos' });
-    }
     //confirmar existencia de email
     const usuario = await Usuario.findOne({ email });
     if (!usuario) {
         return done(null, false, { message: 'Usuario  o contraseña incorrectos.' });
     } else {
         if (!usuario.verificado) {
-            return done(null, false, { message: 'Debe verificar su cuenta primero.' });
+            return done(null, false, { message: 'Debe verificar su cuenta antes de iniciar sesión.' });
         } else {
             //Confirmar que la contraseña coincide
             const coincide = await usuario.coincidePassword(password);
