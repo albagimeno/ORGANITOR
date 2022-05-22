@@ -10,8 +10,6 @@ const session = require('express-session');
 const passport = require('passport');
 const cors = require('cors');
 
-const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
-
 // Inicializaciones
 
 const app = express();
@@ -26,7 +24,6 @@ app.engine('hbs', exphbs.engine({
     layoutDir: path.join(app.get('views'), 'layouts'),
     partialDir: path.join(app.get('views'), 'partials'),
     extname: '.hbs',
-    hbs: allowInsecurePrototypeAccess(_handlebars)
 }));
 app.set('view engine', 'hbs');
 
@@ -51,7 +48,6 @@ app.use(cors(corsOptions));
 
 app.use(flash());
 
-
 // Variables globales
 
 app.use((req, res, next) => {
@@ -70,12 +66,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('./routes/index.routes'));
 app.use(require('./routes/notas.routes'));
-app.use(require('./routes/usuarios.routes'));
 app.use(require('./routes/lista.routes'));
-
-    // res.status(404).send('what???');
-
-
-
+app.use(require('./routes/usuarios.routes'));
 
 module.exports = app;

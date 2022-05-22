@@ -9,7 +9,6 @@ const Usuario = require('../models/Usuario')
 la base de datos todos los productos cuyo usuario  coincida con el id del usuario que está
 autenticado en la sesión. */
 listaCtrl.mostrarLista = async (req, res) => {
-
     const lista = await Producto.find({ usuario: req.user.id }).sort({ date: 'desc' }).lean();
     const datos_usuario = await Usuario.findById(req.user.id).lean();
     res.render('lista/mostrar-lista', { lista, datos_usuario, layout: false });

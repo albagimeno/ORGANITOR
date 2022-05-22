@@ -13,7 +13,6 @@ const Usuario = require('../models/Usuario');
 const Producto = require('../models/Lista');
 // Llamada al modelo de nota
 const Nota = require('../models/Notas');
-const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 
 // Muestra el fichero /views/usuarios/registro.hbs
 usuariosCtrl.mostrarFormRegistro = (req, res) => {
@@ -172,7 +171,6 @@ usuariosCtrl.salir = (req, res) => {
     req.flash('mensaje_correcto', 'Tu sesión ha sido cerrada.');
     res.redirect('/inicio_sesion');
 }
-
 
 // Configuración del correo, creación de la comunicación con el servidor de correo
 const transporter = nodemailer.createTransport({

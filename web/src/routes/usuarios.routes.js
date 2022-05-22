@@ -40,5 +40,4 @@ router.get('/verificar/:id', verificarCuenta)
 router.get('/404', mostrarError404)
 router.get('/*', detectarError404)
 
-
 module.exports = router;

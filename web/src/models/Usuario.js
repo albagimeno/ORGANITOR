@@ -17,16 +17,20 @@ const UsuarioSchema = new Schema({
     timestamps: true
 });
 
+/* Encripta la contraseña de la base de datos */ 
 UsuarioSchema.methods.encriptarPassword = async password => {
     const salt = await bcrypt.genSalt(10);
     return await bcrypt.hash(password, salt);
 };
 
+/* Comprueba que la contraseña que se pasa por parámetro
+coindice que con la de la base de datos */
 UsuarioSchema.methods.coincidePassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 }
 
-
+/* Permite crear un token cifrado con una frase secreta 
+y el id del usuario, de esta forma se crea un token único.*/
 UsuarioSchema.methods.generarTokenVerificacion =  usuario => {
     const tokenVerificacion = jwt.sign(
         { ID: usuario._id },
