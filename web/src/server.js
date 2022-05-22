@@ -8,6 +8,7 @@ const methodOverride = require("method-override");
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+const cors = require('cors');
 
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 
@@ -41,6 +42,13 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+var corsOptions = {
+    origin: 'organitor.es', // Aqui debemos reemplazar el * por el dominio de nuestro front
+    optionsSuccessStatus: 200 // Es necesario para navegadores antiguos o algunos SmartTVs
+}
+app.use(cors(corsOptions));
+
 app.use(flash());
 
 

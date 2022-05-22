@@ -119,9 +119,9 @@ usuariosCtrl.registro = async (req, res) => {
                 <p>Saludos</p>
                 <p>Soporte de Organitor</p>`
             });
-            correctos.push({ text: `Correo enviado a ${email}`});
-            correctos.push({ text: 'Usuario creado de forma correcta, revise su correo electrónico para verificar su cuenta.'});
-            res.render('usuarios/inicio_sesion', {correctos})
+            correctos.push({ text: `Correo enviado a ${email}` });
+            correctos.push({ text: 'Usuario creado de forma correcta, revise su correo electrónico para verificar su cuenta.' });
+            res.render('usuarios/inicio_sesion', { correctos })
 
         }
     }
@@ -185,6 +185,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+// Verifica que la conexión con el servidor de crreo es correcta
 transporter.verify(function (error, success) {
     if (error) {
         console.log(error);
@@ -205,26 +206,27 @@ usuariosCtrl.verificarCuenta = async (req, res) => {
             process.env.TOKEN_VERIFICACION_USUARIO
         );
 
-    const usuario = await Usuario.findOne({ "_id": verificacion.ID });
-    if (!usuario) {
-        req.flash('mensaje_error', 'Usuario no encontrado.');
-        res.redirect('/inicio_sesion');
-    } else {
-        usuario.verificado = true;
-        await usuario.save();
-        req.flash('mensaje_correcto', 'Usuario verificado de forma correcta');
-        res.redirect('/inicio_sesion');
+        const usuario = await Usuario.findOne({ "_id": verificacion.ID });
+        if (!usuario) {
+            req.flash('mensaje_error', 'Usuario no encontrado.');
+            res.redirect('/inicio_sesion');
+        } else {
+            usuario.verificado = true;
+            await usuario.save();
+            req.flash('mensaje_correcto', 'Usuario verificado de forma correcta');
+            res.redirect('/inicio_sesion');
+        }
     }
 }
-}
 
+// Permite detectar si la ruta indicada existe.
 usuariosCtrl.detectarError404 = (req, res) => {
     res.status(404).redirect('/404');
 }
+/* En caso de que la ruta no exista, redirige al usuario a
+una página de error concreta. */
 usuariosCtrl.mostrarError404 = (req, res) => {
-        res.render('partials/error404')
+    res.render('partials/error404')
 }
-
-
 
 module.exports = usuariosCtrl;
