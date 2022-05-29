@@ -113,6 +113,7 @@ usuariosCtrl.registro = async (req, res) => {
                 subject: 'Verificación de cuenta',
                 html: `
                 <p>Queremos darle la bienvenida al proyecto de Alba e Ismael, esperamos que lo disfrute</p>
+                <br>
                 <p>Pulse en <a href = '${ruta}'>aquí</a> para confirmar su cuenta.</p>
                 <br>
                 <p>Saludos</p>
@@ -168,7 +169,7 @@ usuariosCtrl.mostrarDashboard = async (req, res) => {
 // Permite al usuario cerrar la sesión y redirije a /inicio_sesion
 usuariosCtrl.salir = (req, res) => {
     req.logout();
-    req.flash('mensaje_correcto', 'Tu sesión ha sido cerrada.');
+    req.flash('mensaje_correcto', 'Su sesión ha sido cerrada.');
     res.redirect('/inicio_sesion');
 }
 
