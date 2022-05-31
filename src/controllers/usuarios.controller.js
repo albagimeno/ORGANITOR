@@ -112,12 +112,12 @@ usuariosCtrl.registro = async (req, res) => {
                 to: email,
                 subject: 'Verificación de cuenta',
                 html: `
-                <p>Queremos darle la bienvenida al proyecto de Alba e Ismael, esperamos que lo disfrute</p>
+                <p>Queremos darle la bienvenida al proyecto de Alba e Ismael, ¡Esperamos que lo disfrute!.</p>
                 <br>
                 <p>Pulse en <a href = '${ruta}'>aquí</a> para confirmar su cuenta.</p>
                 <br>
-                <p>Saludos</p>
-                <p>Soporte de Organitor</p>`
+                <p>Saludos,</p>
+                <p>Soporte de Organitor.</p>`
             });
             correctos.push({ text: `Correo enviado a ${email}` });
             correctos.push({ text: 'Usuario creado de forma correcta, revise su correo electrónico para verificar su cuenta.' });
