@@ -73,10 +73,10 @@ usuariosCtrl.registro = async (req, res) => {
         })
     }
     else {
-        const emailUsuario = await Usuario.findOne({ "email": email });
-        const id_usuarioUsuario = await Usuario.findOne({ "id_usuario": id_usuario });
-        if (emailUsuario) {
-            errores.push({ text: 'El email indicado ya está en uso.' });
+        const emailUsuario = await Usuario.findOne({ email });
+        const id_usuarioUsuario = await Usuario.findOne({ id_usuario });
+        if (emailUsuario || id_usuarioUsuario) {
+            errores.push({ text: 'El email  o el usuario indicado ya está en uso.' });
             res.render('usuarios/registro', {
                 errores,
                 nombre,
@@ -87,18 +87,18 @@ usuariosCtrl.registro = async (req, res) => {
                 confirmar_password
             })
         }
-        if (id_usuarioUsuario) {
-            errores.push({ text: 'El usuario indicado ya está en uso.' });
-            res.render('usuarios/registro', {
-                errores,
-                nombre,
-                apellidos,
-                id_usuario,
-                email,
-                password,
-                confirmar_password
-            })
-        }
+        // if (id_usuarioUsuario) {
+        //     errores.push({ text: 'El usuario indicado ya está en uso.' });
+        //     res.render('usuarios/registro', {
+        //         errores,
+        //         nombre,
+        //         apellidos,
+        //         id_usuario,
+        //         email,
+        //         password,
+        //         confirmar_password
+        //     })
+        // }
         else {
             const correctos = []
             const nuevoUsuario = new Usuario({ nombre, apellidos, id_usuario, email, password });
