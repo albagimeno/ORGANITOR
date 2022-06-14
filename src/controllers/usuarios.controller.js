@@ -208,6 +208,7 @@ usuariosCtrl.verificarCuenta = async (req, res) => {
                     req.flash('mensaje_error', 'Token no válido');
                     res.redirect('/inicio_sesion');
                 } 
+            }
         );
 
         const usuario = await Usuario.findOne({ "_id": verificacion.ID });
