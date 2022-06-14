@@ -106,7 +106,7 @@ usuariosCtrl.registro = async (req, res) => {
             await nuevoUsuario.save();
 
             const tokenVerificacion = nuevoUsuario.generarTokenVerificacion(nuevoUsuario);
-            const ruta = `https://organitor.es/verificar/${tokenVerificacion}`
+            const ruta = `http://localhost:4000/verificar/${tokenVerificacion}`
             transporter.sendMail({
                 from: '"Bienvenida a Organitor" <noreply@organitor.com>',
                 to: email,
@@ -202,15 +202,16 @@ usuariosCtrl.verificarCuenta = async (req, res) => {
 
         const verificacion = jwt.verify(
             req.params.id,
-            process.env.TOKEN_VERIFICACION_USUARIO,
-            // function (err) {
+            process.env.TOKEN_VERIFICACION_USUARIO
+            // (err, IDusuario) =>{
             //     if (err) {
             //         req.flash('mensaje_error', 'Token no válido');
             //         res.redirect('/inicio_sesion');
-            //     } 
+            //     }else{
+            //         return IDusuario
+            //     }
             // }
         );
-        console.log(verificacion)
         const usuario = await Usuario.findOne({ "_id": verificacion.ID });
         if (!usuario) {
             req.flash('mensaje_error', 'Usuario no encontrado.');
@@ -221,18 +222,20 @@ usuariosCtrl.verificarCuenta = async (req, res) => {
             await usuario.save();
             req.flash('mensaje_correcto', 'Usuario verificado de forma correcta');
             res.redirect('/inicio_sesion');
+
         }
+
     }
 }
 
-// Permite detectar si la ruta indicada existe.
-usuariosCtrl.detectarError404 = (req, res) => {
-    res.status(404).redirect('/404');
-}
-/* En caso de que la ruta no exista, redirige al usuario a
-una página de error concreta. */
-usuariosCtrl.mostrarError404 = (req, res) => {
-    res.render('partials/error404')
-}
+    // Permite detectar si la ruta indicada existe.
+    usuariosCtrl.detectarError404 = (req, res) => {
+        res.status(404).redirect('/404');
+    }
+    /* En caso de que la ruta no exista, redirige al usuario a
+    una página de error concreta. */
+    usuariosCtrl.mostrarError404 = (req, res) => {
+        res.render('partials/error404')
+    }
 
-module.exports = usuariosCtrl;
+    module.exports = usuariosCtrl;
