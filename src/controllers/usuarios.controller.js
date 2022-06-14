@@ -106,7 +106,7 @@ usuariosCtrl.registro = async (req, res) => {
             await nuevoUsuario.save();
 
             const tokenVerificacion = nuevoUsuario.generarTokenVerificacion(nuevoUsuario);
-            const ruta = `http://localhost:4000/verificar/${tokenVerificacion}`
+            const ruta = `https://organitor.es/verificar/${tokenVerificacion}`
             transporter.sendMail({
                 from: '"Bienvenida a Organitor" <noreply@organitor.com>',
                 to: email,
