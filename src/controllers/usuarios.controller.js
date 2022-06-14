@@ -210,7 +210,7 @@ usuariosCtrl.verificarCuenta = async (req, res) => {
             //     } 
             // }
         );
-        console.table(verificacion)
+        console.log(verificacion)
         const usuario = await Usuario.findOne({ "_id": verificacion.ID });
         if (!usuario) {
             req.flash('mensaje_error', 'Usuario no encontrado.');
