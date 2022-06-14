@@ -207,21 +207,21 @@ usuariosCtrl.verificarCuenta = async (req, res) => {
                 if (err) {
                     req.flash('mensaje_error', 'Token no válido');
                     res.redirect('/inicio_sesion');
-                } 
+                } else {
+                    const usuario = await Usuario.findOne({ "_id": verificacion.ID });
+                    if (!usuario) {
+                        req.flash('mensaje_error', 'Usuario no encontrado.');
+                        res.redirect('/inicio_sesion');
+                    }
+                    else {
+                        usuario.verificado = true;
+                        await usuario.save();
+                        req.flash('mensaje_correcto', 'Usuario verificado de forma correcta');
+                        res.redirect('/inicio_sesion');
+                    }
+                }
             }
         );
-
-        const usuario = await Usuario.findOne({ "_id": verificacion.ID });
-        if (!usuario) {
-            req.flash('mensaje_error', 'Usuario no encontrado.');
-            res.redirect('/inicio_sesion');
-        }
-        else {
-            usuario.verificado = true;
-            await usuario.save();
-            req.flash('mensaje_correcto', 'Usuario verificado de forma correcta');
-            res.redirect('/inicio_sesion');
-        }
     }
 }
 
