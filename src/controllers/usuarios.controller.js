@@ -203,25 +203,25 @@ usuariosCtrl.verificarCuenta = async (req, res) => {
         const verificacion = jwt.verify(
             req.params.id,
             process.env.TOKEN_VERIFICACION_USUARIO,
-            function (err) {
-                if (err) {
-                    req.flash('mensaje_error', 'Token no válido');
-                    res.redirect('/inicio_sesion');
-                } else {
-                    const usuario = await Usuario.findOne({ "_id": verificacion.ID });
-                    if (!usuario) {
-                        req.flash('mensaje_error', 'Usuario no encontrado.');
-                        res.redirect('/inicio_sesion');
-                    }
-                    else {
-                        usuario.verificado = true;
-                        await usuario.save();
-                        req.flash('mensaje_correcto', 'Usuario verificado de forma correcta');
-                        res.redirect('/inicio_sesion');
-                    }
-                }
-            }
+            // function (err) {
+            //     if (err) {
+            //         req.flash('mensaje_error', 'Token no válido');
+            //         res.redirect('/inicio_sesion');
+            //     } 
+            // }
         );
+        console.table(verificacion)
+        const usuario = await Usuario.findOne({ "_id": verificacion.ID });
+        if (!usuario) {
+            req.flash('mensaje_error', 'Usuario no encontrado.');
+            res.redirect('/inicio_sesion');
+        }
+        else {
+            usuario.verificado = true;
+            await usuario.save();
+            req.flash('mensaje_correcto', 'Usuario verificado de forma correcta');
+            res.redirect('/inicio_sesion');
+        }
     }
 }
 
